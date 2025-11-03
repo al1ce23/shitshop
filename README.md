@@ -21,6 +21,13 @@ sudo apt install -y nodejs
 
 # Install PM2 (process manager)
 sudo npm install -g pm2
+
+# Create User
+sudo adduser --system --group --home /home/webshop webshop
+
+# Prepare App Directory
+sudo mkdir -p /home/webshop/app
+sudo chown -R webshop:webshop /home/webshop/app
 ```
 
 ## Step 3: Configure Environment
@@ -93,18 +100,35 @@ cp .env.example .env
 nano .env  # Edit with your settings
 ```
 
+### Security Best Practices
+
+**IMPORTANT: Do NOT run PM2 as root!** Create a dedicated user:
+
+```bash
+# Create a system user for the webshop
+sudo adduser --system --group --home /home/webshop webshop
+
+# Set up the application directory
+sudo mkdir -p /home/webshop/app
+sudo cp -r ./* /home/webshop/app/
+sudo chown -R webshop:webshop /home/webshop/app
+
+# Install dependencies as webshop user
+cd /home/webshop/app
+sudo -u webshop npm install --production
+```
+
 ## Step 5: Start with PM2
 
 ```bash
-# Start the application
-pm2 start server.js --name webshop
+# Start the application as webshop user
+sudo -u webshop pm2 start server.js --name webshop
 
 # Save PM2 configuration
-pm2 save
+sudo -u webshop pm2 save
 
-# Enable PM2 startup on boot
-pm2 startup
-# Follow the instructions shown
+# Enable PM2 startup on boot for webshop user
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u webshop --hp /home/webshop
 ```
 
 **PM2 Commands:**
@@ -133,14 +157,38 @@ server {
     listen 80;
     server_name your-domain.com;
 
+    # Uncomment these lines after running certbot for SSL
+    # listen 443 ssl http2;
+    # ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+    # ssl_protocols TLSv1.2 TLSv1.3;
+    # ssl_ciphers HIGH:!aNULL:!MD5;
+    # ssl_prefer_server_ciphers on;
+
+    # Uncomment to redirect HTTP to HTTPS (after SSL setup)
+    # if ($scheme != "https") {
+    #     return 301 https://$host$request_uri;
+    # }
+
     location / {
         proxy_pass http://localhost:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
+    # Increase upload size if needed for large product images
+    client_max_body_size 10M;
 }
 ```
 
