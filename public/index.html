@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Webshop</title>
+    <link rel="stylesheet" href="themes/base.css">
+    <link rel="stylesheet" href="themes/gray.css">
+</head>
+<body>
+    <main class="container">
+        <nav class="category-nav">
+            <div id="category-filter" class="category-filter">
+                <button class="category-btn active" data-category="all">All Products</button>
+            </div>
+            <div class="header-actions">
+                <button id="cart-btn" class="cart-button">
+                    🛒 Cart (<span id="cart-count">0</span>)
+                </button>
+            </div>
+        </nav>
+        <div id="products-grid" class="products-grid">
+            <p class="loading">Loading products...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <a href="/about.html" class="footer-link">About</a>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Shopping Cart</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items"></div>
+                <div class="cart-total">
+                    <strong>Total: <span id="cart-total">0.00</span> <span id="currency">EUR</span></strong>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="checkout-btn" class="btn btn-primary">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Checkout</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="customer-name">Name *</label>
+                        <input type="text" id="customer-name" name="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-email">Email *</label>
+                        <input type="email" id="customer-email" name="customerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Phone</label>
+                        <input type="tel" id="customer-phone" name="customerPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-address">Shipping Address</label>
+                        <textarea id="customer-address" name="customerAddress" rows="3"></textarea>
+                    </div>
+
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div id="checkout-items"></div>
+                        <div class="checkout-total">
+                            <strong>Total: <span id="checkout-total">0.00</span> <span id="checkout-currency">EUR</span></strong>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Submit Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Order Submitted!</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="success-message">✓ Your order has been submitted successfully! You will receive a confirmation email shortly.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="location.reload()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="product-modal-name">Product Name</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="product-modal-image" src="" alt="" class="product-modal-image">
+                <p id="product-modal-description" class="product-modal-description"></p>
+                <p id="product-modal-price" class="product-modal-price"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="product-modal-add-btn" class="btn btn-primary btn-block">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

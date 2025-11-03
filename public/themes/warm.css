@@ -1,0 +1,153 @@
+/* Warm Theme - Brown/Orange */
+
+body {
+    background: linear-gradient(135deg, #0f0a1e 0%, #1a1333 100%);
+    color: #e8e4f3;
+}
+
+.cart-button, .about-link {
+    background: linear-gradient(135deg, #d4843a 0%, #b8652a 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(212, 132, 58, 0.3);
+}
+
+.cart-button:hover, .about-link:hover {
+    box-shadow: 0 6px 20px rgba(212, 132, 58, 0.5);
+}
+
+.category-btn {
+    border: 1px solid rgba(212, 163, 115, 0.3);
+    color: #f5e6d3;
+}
+
+.category-btn:hover {
+    background-color: rgba(212, 132, 58, 0.2);
+    border-color: #d4a373;
+}
+
+.category-btn.active {
+    background: linear-gradient(135deg, #d4843a 0%, #b8652a 100%);
+    border-color: #d4843a;
+    color: white;
+    box-shadow: 0 2px 10px rgba(212, 132, 58, 0.3);
+}
+
+.product-card {
+    background: linear-gradient(135deg, #2a1f18 0%, #3d2f24 100%);
+    border: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+.product-card::before {
+    background: linear-gradient(135deg, rgba(212, 132, 58, 0.15) 0%, rgba(184, 101, 42, 0.15) 100%);
+}
+
+.product-card:hover {
+    box-shadow: 0 12px 30px rgba(212, 132, 58, 0.4);
+    border-color: #d4a373;
+}
+
+.product-description {
+    color: #c9b299;
+}
+
+.product-price {
+    color: #f4a460;
+    text-shadow: 0 2px 4px rgba(244, 164, 96, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #d4843a 0%, #b8652a 100%);
+    box-shadow: 0 4px 15px rgba(212, 132, 58, 0.3);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(212, 132, 58, 0.5);
+}
+
+.add-to-cart-btn {
+    background: linear-gradient(135deg, #d4843a 0%, #b8652a 100%);
+    box-shadow: 0 4px 15px rgba(212, 132, 58, 0.3);
+}
+
+.add-to-cart-btn:hover {
+    box-shadow: 0 6px 20px rgba(212, 132, 58, 0.5);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2a1f18 0%, #3d2f24 100%);
+    border: 1px solid rgba(212, 163, 115, 0.4);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+}
+
+.close-btn {
+    color: #c9b299;
+}
+
+.close-btn:hover {
+    color: #f5e6d3;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(212, 163, 115, 0.3);
+}
+
+.cart-item {
+    border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+.cart-item-price {
+    color: #d4a373;
+}
+
+.quantity-btn {
+    background-color: rgba(212, 132, 58, 0.2);
+    border: 1px solid rgba(212, 163, 115, 0.4);
+    color: #f5e6d3;
+}
+
+.quantity-btn:hover {
+    background-color: rgba(212, 132, 58, 0.4);
+    border-color: #d4a373;
+}
+
+.form-group input,
+.form-group textarea {
+    background-color: rgba(26, 20, 16, 0.5);
+    border: 1px solid rgba(212, 163, 115, 0.3);
+    color: #f5e6d3;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #d4a373;
+    background-color: rgba(42, 31, 24, 0.7);
+}
+
+.order-summary {
+    background-color: rgba(42, 31, 24, 0.5);
+    border: 1px solid rgba(212, 163, 115, 0.3);
+}
+
+.success-message {
+    color: #f4a460;
+}
+
+.loading {
+    color: #c9b299;
+}
+
+.product-modal-image {
+    background: linear-gradient(135deg, #2a1f18 0%, #3d2f24 100%);
+}
+
+.product-modal-price {
+    color: #f4a460;
+    text-shadow: 0 2px 8px rgba(244, 164, 96, 0.4);
+}
+
+.empty-cart {
+    color: #d4a373;
+}
