@@ -21,13 +21,6 @@ sudo apt install -y nodejs
 
 # Install PM2 (process manager)
 sudo npm install -g pm2
-
-# Create User
-sudo adduser --system --group --home /home/webshop webshop
-
-# Prepare App Directory
-sudo mkdir -p /home/webshop/app
-sudo chown -R webshop:webshop /home/webshop/app
 ```
 
 ## Step 3: Configure Environment
