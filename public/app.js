@@ -303,8 +303,9 @@ function openProductDetail(productId) {
     if (!product) return;
 
     document.getElementById('product-modal-name').textContent = product.name;
-    document.getElementById('product-modal-image').src = product.image;
-    document.getElementById('product-modal-image').alt = product.name;
+    const modalImage = document.getElementById('product-modal-image');
+    modalImage.src = product.image;
+    modalImage.alt = product.name;
     document.getElementById('product-modal-description').textContent = product.description || '';
     document.getElementById('product-modal-price').textContent = `${product.price.toFixed(2)} ${currency}`;
 
@@ -316,6 +317,80 @@ function openProductDetail(productId) {
     };
 
     openModal(productModal);
+
+    // Initialize magnifier after image loads
+    modalImage.onload = () => {
+        initMagnifier();
+    };
+
+    // If image is already loaded (cached), initialize immediately
+    if (modalImage.complete) {
+        initMagnifier();
+    }
+}
+
+// Image Magnifier
+function initMagnifier() {
+    const img = document.getElementById('product-modal-image');
+    const glass = document.getElementById('magnifier-glass');
+    const container = img.parentElement;
+
+    // Magnification zoom level
+    const zoom = 1.8;
+
+    // Remove existing listeners if any
+    const newImg = img.cloneNode(true);
+    img.parentNode.replaceChild(newImg, img);
+
+    // Get the updated reference
+    const image = document.getElementById('product-modal-image');
+    const magnifier = document.getElementById('magnifier-glass');
+
+    image.addEventListener('mouseenter', function() {
+        magnifier.classList.add('active');
+    });
+
+    image.addEventListener('mouseleave', function() {
+        magnifier.classList.remove('active');
+    });
+
+    image.addEventListener('mousemove', function(e) {
+        const rect = image.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Check if cursor is within image bounds
+        if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+            magnifier.classList.remove('active');
+            return;
+        }
+
+        magnifier.classList.add('active');
+
+        // Calculate magnifier position
+        const glassWidth = magnifier.offsetWidth;
+        const glassHeight = magnifier.offsetHeight;
+
+        // Position the magnifier glass
+        let posX = x - (glassWidth / 2);
+        let posY = y - (glassHeight / 2);
+
+        // Prevent magnifier from going outside image bounds
+        posX = Math.max(0, Math.min(posX, rect.width - glassWidth));
+        posY = Math.max(0, Math.min(posY, rect.height - glassHeight));
+
+        magnifier.style.left = posX + 'px';
+        magnifier.style.top = posY + 'px';
+
+        // Calculate background position for zoom effect
+        const bgPosX = -(x * zoom - glassWidth / 2);
+        const bgPosY = -(y * zoom - glassHeight / 2);
+
+        // Set background image and position
+        magnifier.style.backgroundImage = `url('${image.src}')`;
+        magnifier.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
+        magnifier.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+    });
 }
 
 // Modal Functions
